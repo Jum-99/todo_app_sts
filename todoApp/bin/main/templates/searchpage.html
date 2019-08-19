@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>search page</title>
+	<meta http-equiv="Content-Type"
+		content="text/html; charset=UTF-8" />
+	<link href="/css/index.css" th:href="@{/css/index.css}" rel="stylesheet"></link>
+	<style th:include="header :: frag_style"></style>
+</head>
+
+<body>
+
+	<div th:include="header :: frag_body"><p>header</p></div>
+
+	<div class="searchWindow">
+		<form method="post" action="/search">
+			<div class="container">
+				<div>
+					<input type="text" class="inText" name="searchWord" th:value="${searchWord}" />
+				</div>
+				<div class="btn-container">
+					<input type="submit" class="btn-base search-btn" value="検索"/>
+				</div>
+			</div>
+		</form>
+	</div>
+</body>
+
+</html>

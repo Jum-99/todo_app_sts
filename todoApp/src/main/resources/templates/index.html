@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>top page</title>
+	<meta http-equiv="Content-Type"
+		content="text/html; charset=UTF-8" />
+	<link href="/css/index.css" th:href="@{/css/index.css}" rel="stylesheet"></link>
+	<style th:include="header :: frag_style"></style>
+	
+	<script th:inline="javascript">
+	function onClickEditBtn(btn) {
+		id = btn.parentNode.getAttribute("value");
+		window.location.href = "/edit/" + id;
+	}
+	</script>
+</head>
+
+<body>
+
+	<div th:include="header :: frag_body"><p>header</p></div>
+
+	<!-- <p th:text="${msg}"></p> -->
+
+	<p class="description" th:text="#{content.createTodoDisc}">description</p>
+	<div class="createTodo">
+		<form method="post" action="/" th:object="${formModel}">
+			<div class="container">
+				<div>
+					<div>
+						<label for="title">ToDo名</label>
+						<input type="text" class="inText" name="title" th:value="*{title}" th:errorclass="err-input" />
+						<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:errorclass="err"></div>
+					</div>
+					<div>
+						<label for="deadline">期限</label>
+						<input type="text" class="inText" name="deadline" th:value="*{deadline}" th:errorclass="err-input" />
+						<div th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}" th:errorclass="err"></div>
+					</div>
+					<input type="hidden" name="createDate" th:value="${#dates.format(new java.util.Date(),'yyyy/MM/dd')}" />
+					<input type="hidden" name="done" th:value="${false}" />
+				</div>
+				<div class="btn-container">
+					<input type="submit" class="btn-base create-btn" value="ToDoの追加"/>
+				</div>
+			</div>
+		</form>
+	</div>
+	
+	<hr/>
+	
+	<div>
+		<div th:each="obj : ${datalist}" class="todo-card">
+			<div>
+				<p th:text="${obj.title}"></p>
+				<p th:text="'期限：　' + ${obj.deadline}"></p>
+				<p th:text="'作成日：' + ${obj.createDate}"></p>
+			</div>
+			<div class="btn-container" th:value="${obj.id}">
+				<input type="button" class="btn-base edit-btn" value="編集" onclick="onClickEditBtn(this);" />
+			</div>
+			<div class="btn-container">
+				<form th:action="@{'/done/' + ${obj.id}}" method="POST">
+					<input type="submit" class="btn-base" 
+						th:classappend="(${obj.done} ? 'done-btn' : 'undone-btn')"
+						th:value="(${obj.done} ? ${doneTxt} : ${undoneTxt})"/>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+</body>
+
+</html>

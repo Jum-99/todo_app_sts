@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>edit page</title>
+	<meta http-equiv="Content-Type"
+		content="text/html; charset=UTF-8" />
+	<link href="/css/index.css" th:href="@{/css/index.css}" rel="stylesheet"></link>
+	<style th:include="header :: frag_style"></style>
+</head>
+
+<body>
+
+	<div th:include="header :: frag_body"><p>header</p></div>
+
+	<p class="description" th:text="#{content.editTodoDisc}">description</p>
+	<div class="createTodo">
+		<form method="post" action="/edit" th:object="${formModel}">
+			<input type="hidden" name="id" th:value="*{id}" />
+			<input type="hidden" name="createDate" th:value="*{createDate}" />
+			<input type="hidden" name="done" th:value="*{done}" />
+			<div class="container">
+				<div>
+					<div>
+						<label for="title">ToDo名</label>
+						<input type="text" class="inText" name="title" th:value="*{title}" th:errorclass="err-input" />
+						<div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" th:errorclass="err"></div>
+					</div>
+					<div>
+						<label for="deadline">期限</label>
+						<input type="text" class="inText" name="deadline" th:value="*{deadline}" th:errorclass="err-input" />
+						<div th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}" th:errorclass="err"></div>
+					</div>
+				</div>
+				<div class="btn-container">
+					<input type="submit" class="btn-base create-btn" value="更新" />
+				</div>
+			</div>
+		</form>
+	</div>
+
+</body>
+
+</html>

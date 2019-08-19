@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>header page</title>
+	<meta http-equiv="Content-Type"
+		content="text/html; charset=UTF-8" />
+	<style th:fragment="frag_style">
+	div.header { background:skyblue; padding:10px 0; display:flex; justify-content:space-between; }
+	p.title { font-size:24pt; font-weight:bold; color:black; margin:0 20px; }
+	p.search { font-size:22pt; font-weight:bold; color:black; margin:0 80px; }
+	</style>
+</head>
+
+<body>
+
+	<div th:fragment="frag_body">
+		<div class="header">
+			<p class="title"><a th:href="@{/}">TODOリスト</a></p>
+			<p class="search"><a th:href="@{/searchpage}">検索</a></p>
+		</div>
+	</div>
+
+</body>
+
+</html>
