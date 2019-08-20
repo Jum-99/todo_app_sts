@@ -120,7 +120,7 @@ label {
 	color: #ff4d4d;
 }
 
-.searchWindow {
+.search-window {
 	padding:10px;
 	border:solid 2px lightgray;
 	margin: 50px 0;
@@ -132,4 +132,13 @@ label {
 }
 .search-btn:hover {
 	color: #7f7fff;
+}
+
+.search-result {
+	padding: 10px;
+}
+.search-result-msg {
+	color: red;
+	font-weight: bold;
+	margin-left: 2px;
 }

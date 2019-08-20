@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -123,8 +124,13 @@ public class TodoAppController {
 	}
 
 	@RequestMapping(value="/search", method=RequestMethod.POST)
-	public ModelAndView search(ModelAndView mav) {
+	public ModelAndView search(
+			@RequestParam("searchWord")String str,
+			ModelAndView mav) {
 		mav.setViewName("searchpage");
+		String msg = "対象のToDoは見つかりません";
+
+		mav.addObject("msg", msg);
 		return mav;
 	}
 }

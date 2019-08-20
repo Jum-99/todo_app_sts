@@ -12,7 +12,7 @@
 
 	<div th:include="header :: frag_body"><p>header</p></div>
 
-	<div class="searchWindow">
+	<div class="search-window">
 		<form method="post" action="/search">
 			<div class="container">
 				<div>
@@ -23,6 +23,10 @@
 				</div>
 			</div>
 		</form>
+	</div>
+
+	<div class="search-result">
+		<p class="search-result-msg" th:text="${msg}">result message</p>
 	</div>
 </body>
 
