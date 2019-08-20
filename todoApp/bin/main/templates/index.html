@@ -19,8 +19,6 @@
 
 	<div th:include="header :: frag_body"><p>header</p></div>
 
-	<!-- <p th:text="${msg}"></p> -->
-
 	<p class="description" th:text="#{content.createTodoDisc}">description</p>
 	<div class="createTodo">
 		<form method="post" action="/" th:object="${formModel}">

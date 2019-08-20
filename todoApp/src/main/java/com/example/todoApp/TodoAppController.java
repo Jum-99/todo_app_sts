@@ -1,5 +1,6 @@
 package com.example.todoApp;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.PostConstruct;
@@ -12,6 +13,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -45,7 +47,6 @@ public class TodoAppController {
 			@ModelAttribute("formModel") TodoData tododata,
 			ModelAndView mav) {
 		mav.setViewName("index");
-		mav.addObject("msg", "this is sampl content");
 		mav.addObject("doneTxt", "完了");
 		mav.addObject("undoneTxt", "未完了");
 		mav.addObject("formModel", tododata);
@@ -67,7 +68,6 @@ public class TodoAppController {
 			res = new ModelAndView("redirect:/");
 		} else {
 			mov.setViewName("index");
-			mov.addObject("msg", "sorry, error is occured...");
 			mov.addObject("doneTxt", "完了");
 			mov.addObject("undoneTxt", "未完了");
 			Iterable<TodoData> list = repository.findAll();
@@ -123,8 +123,22 @@ public class TodoAppController {
 	}
 
 	@RequestMapping(value="/search", method=RequestMethod.POST)
-	public ModelAndView search(ModelAndView mav) {
+	public ModelAndView search(
+			@RequestParam("searchWord")String str,
+			ModelAndView mav) {
 		mav.setViewName("searchpage");
+		String msg = "対象のToDoは見つかりません";
+
+		if (str != "") {
+			List<TodoData> searchRes = repository.findByTitleLike("%" + str + "%");
+			if (!searchRes.isEmpty()) {
+				mav.addObject("datalist", searchRes);
+				msg = "ToDoが" + searchRes.size() + "件見つかりました";
+				mav.addObject("doneTxt", "完了");
+				mav.addObject("undoneTxt", "未完了");
+			}
+		}
+		mav.addObject("msg", msg);
 		return mav;
 	}
 }

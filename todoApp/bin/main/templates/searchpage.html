@@ -12,7 +12,7 @@
 
 	<div th:include="header :: frag_body"><p>header</p></div>
 
-	<div class="searchWindow">
+	<div class="search-window">
 		<form method="post" action="/search">
 			<div class="container">
 				<div>
@@ -23,6 +23,28 @@
 				</div>
 			</div>
 		</form>
+	</div>
+
+	<div class="search-result">
+		<p class="search-result-msg" th:text="${msg}">result message</p>
+
+		<div th:each="obj : ${datalist}" class="todo-card">
+			<div>
+				<p th:text="${obj.title}"></p>
+				<p th:text="'期限：　' + ${obj.deadline}"></p>
+				<p th:text="'作成日：' + ${obj.createDate}"></p>
+			</div>
+			<div class="btn-container" th:value="${obj.id}">
+				<input type="button" class="btn-base edit-btn" value="編集" onclick="onClickEditBtn(this);" />
+			</div>
+			<div class="btn-container">
+				<form th:action="@{'/done/' + ${obj.id}}" method="POST">
+					<input type="submit" class="btn-base" 
+						th:classappend="(${obj.done} ? 'done-btn' : 'undone-btn')"
+						th:value="(${obj.done} ? ${doneTxt} : ${undoneTxt})"/>
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 
